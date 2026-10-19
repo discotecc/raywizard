@@ -8,7 +8,9 @@
 #include "utility.h"
 #include "vec3.h"
 
+#include <cstdint>
 #include <iostream>
+#include <vector>
 
 class camera {
 public:
@@ -22,6 +24,7 @@ public:
   point3 look_at = point3(0, 0, -1);
   vec3 v_up = vec3(0, 1, 0);
 
+  // Renders a single image and prints it to stdout as PPM (original behavior).
   void render(const intersectable &scene) {
     initialize();
 
@@ -31,16 +34,32 @@ public:
       std::clog << "\rScanlines remaining: " << (image_height - j) << ' '
                 << std::flush;
       for (int i = 0; i < image_width; i++) {
-        color pixel_color(0, 0, 0);
-        for (int sample = 0; sample < samples_per_pixel; sample++) {
-          ray r = get_ray(i, j);
-          pixel_color += ray_color(r, max_depth, scene);
-        }
-        write_color(std::cout, pixel_samples_scale * pixel_color);
+        write_color(std::cout, render_pixel(i, j, scene));
       }
     }
 
     std::clog << "\rDone.                 \n";
+  }
+
+  // Renders a single image into memory as width*height*3 RGB bytes
+  // (row-major, top row first). Used for animation frames
+  std::vector<uint8_t> render_frame(const intersectable &scene) {
+    initialize();
+    std::vector<uint8_t> rgb(size_t(image_width) * image_height * 3);
+
+    for (int j = 0; j < image_height; j++) {
+      for (int i = 0; i < image_width; i++) {
+        uint8_t *px = &rgb[(size_t(j) * image_width + i) * 3];
+        color_to_bytes(render_pixel(i, j, scene), px[0], px[1], px[2]);
+      }
+    }
+    return rgb;
+  }
+
+  int width() const { return image_width; }
+  int height() const {
+    int h = int(image_width / aspect_ratio);
+    return h < 1 ? 1 : h;
   }
 
   vec3 sample_square() const {
@@ -76,6 +95,16 @@ private:
     auto viewport_upper_left =
         center - (focal_length * w) - viewport_u / 2 - viewport_v / 2;
     pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
+  }
+
+  // Averages samples_per_pixel rays through pixel (i,j); returns linear color.
+  color render_pixel(int i, int j, const intersectable &scene) const {
+    color pixel_color(0, 0, 0);
+    for (int sample = 0; sample < samples_per_pixel; sample++) {
+      ray r = get_ray(i, j);
+      pixel_color += ray_color(r, max_depth, scene);
+    }
+    return pixel_samples_scale * pixel_color;
   }
 
   ray get_ray(int i, int j) const {

@@ -14,16 +14,16 @@ set(SOURCES
     src/main.cpp
 )
 
-add_executable(rtiow ${SOURCES})
+add_executable(raywizard ${SOURCES})
 
-target_include_directories(rtiow PRIVATE src)
+target_include_directories(raywizard PRIVATE src)
 
-set_target_properties(rtiow PROPERTIES
+set_target_properties(raywizard PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 
 if(MSVC)
-    target_compile_options(rtiow PRIVATE /W4 /permissive-)
+    target_compile_options(raywizard PRIVATE /W4 /permissive-)
 else()
-    target_compile_options(rtiow PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(raywizard PRIVATE -Wall -Wextra -Wpedantic)
 endif()

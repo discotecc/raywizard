@@ -63,11 +63,11 @@ CMAKE_BINARY_DIR = /Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/bu
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/rtiow.dir/all
+all: CMakeFiles/raywizard.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
-codegen: CMakeFiles/rtiow.dir/codegen
+codegen: CMakeFiles/raywizard.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -75,40 +75,40 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/rtiow.dir/clean
+clean: CMakeFiles/raywizard.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/rtiow.dir
+# Target rules for target CMakeFiles/raywizard.dir
 
 # All Build rule for target.
-CMakeFiles/rtiow.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/rtiow.dir/build.make CMakeFiles/rtiow.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/rtiow.dir/build.make CMakeFiles/rtiow.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/build/CMakeFiles --progress-num=1,2 "Built target rtiow"
-.PHONY : CMakeFiles/rtiow.dir/all
+CMakeFiles/raywizard.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raywizard.dir/build.make CMakeFiles/raywizard.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raywizard.dir/build.make CMakeFiles/raywizard.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/build/CMakeFiles --progress-num=1,2 "Built target raywizard"
+.PHONY : CMakeFiles/raywizard.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/rtiow.dir/rule: cmake_check_build_system
+CMakeFiles/raywizard.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/rtiow.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/raywizard.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/build/CMakeFiles 0
-.PHONY : CMakeFiles/rtiow.dir/rule
+.PHONY : CMakeFiles/raywizard.dir/rule
 
 # Convenience name for target.
-rtiow: CMakeFiles/rtiow.dir/rule
-.PHONY : rtiow
+raywizard: CMakeFiles/raywizard.dir/rule
+.PHONY : raywizard
 
 # codegen rule for target.
-CMakeFiles/rtiow.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/rtiow.dir/build.make CMakeFiles/rtiow.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/build/CMakeFiles --progress-num=1,2 "Finished codegen for target rtiow"
-.PHONY : CMakeFiles/rtiow.dir/codegen
+CMakeFiles/raywizard.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raywizard.dir/build.make CMakeFiles/raywizard.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/build/CMakeFiles --progress-num=1,2 "Finished codegen for target raywizard"
+.PHONY : CMakeFiles/raywizard.dir/codegen
 
 # clean rule for target.
-CMakeFiles/rtiow.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/rtiow.dir/build.make CMakeFiles/rtiow.dir/clean
-.PHONY : CMakeFiles/rtiow.dir/clean
+CMakeFiles/raywizard.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raywizard.dir/build.make CMakeFiles/raywizard.dir/clean
+.PHONY : CMakeFiles/raywizard.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
