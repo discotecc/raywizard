@@ -95,6 +95,7 @@ raywizard_EXTERNAL_OBJECTS =
 
 bin/raywizard: CMakeFiles/raywizard.dir/src/main.cpp.o
 bin/raywizard: CMakeFiles/raywizard.dir/build.make
+bin/raywizard: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libz.tbd
 bin/raywizard: CMakeFiles/raywizard.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable bin/raywizard"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/raywizard.dir/link.txt --verbose=$(VERBOSE)

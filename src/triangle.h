@@ -59,7 +59,7 @@ public:
     rec.p = r.at(t);
     rec.local_p = frame.to_local(rec.p);
     rec.set_face_normal(r, normal);
-    rec.mat = mat;
+    rec.mat = mat.get();
     return true;
   }
 

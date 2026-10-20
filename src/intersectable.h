@@ -13,7 +13,7 @@ public:
   point3 p;
   point3 local_p; // for texturing...
   vec3 normal;
-  std::shared_ptr<material> mat;
+  const material *mat = nullptr;
   double t;
   bool front_face;
 

@@ -8,8 +8,11 @@
 #include "utility.h"
 #include "vec3.h"
 
+#include <algorithm>
+#include <atomic>
 #include <cstdint>
 #include <iostream>
+#include <thread>
 #include <vector>
 
 class camera {
@@ -24,7 +27,65 @@ public:
   point3 look_at = point3(0, 0, -1);
   vec3 v_up = vec3(0, 1, 0);
 
-  // Renders a single image and prints it to stdout as PPM (original behavior).
+  // dividing image into groups of pixel_group_size pixels for threads to work
+  // on
+  int pixel_group_size = 16;
+  unsigned thread_count = 0; // 0 = use all hardware threads
+
+  std::vector<uint8_t> render_frame(const intersectable &scene) {
+    initialize();
+    std::vector<uint8_t> rgb(size_t(image_width) * image_height * 3);
+    const int pixel_group_x =
+        (image_width + pixel_group_size - 1) / pixel_group_size;
+    const int pixel_group_y =
+        (image_height + pixel_group_size - 1) / pixel_group_size;
+    const int group_count = pixel_group_x * pixel_group_y;
+    std::atomic<int> next_group{0};
+
+    auto worker = [&] {
+      for (int group = next_group.fetch_add(1, std::memory_order_relaxed);
+           group < group_count;
+           group = next_group.fetch_add(1, std::memory_order_relaxed)) {
+        const int x0 = (group % pixel_group_x) * pixel_group_size;
+        const int y0 = (group / pixel_group_x) * pixel_group_size;
+        const int x1 = std::min(x0 + pixel_group_size, image_width);
+        const int y1 = std::min(y0 + pixel_group_size, image_height);
+        for (int j = y0; j < y1; j++) {
+          for (int i = x0; i < x1; i++) {
+            uint8_t *px = &rgb[(size_t(j) * image_width + i) * 3];
+            color_to_bytes(render_pixel(i, j, scene), px[0], px[1], px[2]);
+          }
+        }
+      }
+    };
+
+    unsigned n = thread_count
+                     ? thread_count
+                     : std::max(1u, std::thread::hardware_concurrency());
+    n = std::min<unsigned>(n, unsigned(group_count));
+
+    {
+      std::vector<std::thread> workers;
+      workers.reserve(n - 1);
+      for (unsigned t = 1; t < n; ++t)
+        workers.emplace_back(worker);
+      worker();
+      for (auto &th : workers)
+        th.join();
+    } // all threads joined here
+
+    return rgb;
+  }
+
+  void render(const intersectable &scene) {
+    auto rgb = render_frame(scene);
+    std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+    for (size_t k = 0; k < rgb.size(); k += 3)
+      std::cout << int(rgb[k]) << ' ' << int(rgb[k + 1]) << ' '
+                << int(rgb[k + 2]) << '\n';
+  }
+
+  /*
   void render(const intersectable &scene) {
     initialize();
 
@@ -40,6 +101,8 @@ public:
 
     std::clog << "\rDone.                 \n";
   }
+*/
+  /*
 
   // Renders a single image into memory as width*height*3 RGB bytes
   // (row-major, top row first). Used for animation frames
@@ -55,6 +118,7 @@ public:
     }
     return rgb;
   }
+    */
 
   int width() const { return image_width; }
   int height() const {
@@ -97,7 +161,8 @@ private:
     pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
   }
 
-  // Averages samples_per_pixel rays through pixel (i,j); returns linear color.
+  // Averages samples_per_pixel rays through pixel (i,j); returns linear
+  // color.
   color render_pixel(int i, int j, const intersectable &scene) const {
     color pixel_color(0, 0, 0);
     for (int sample = 0; sample < samples_per_pixel; sample++) {
@@ -137,6 +202,8 @@ private:
 
     vec3 unit_direction = unit_vector(r.direction());
     auto a = 0.5 * (unit_direction.y() + 1.0);
-    return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0);
+    return (1.0 - a) * color(1, 1, 1) + a * color(0.5, 0.7, 1.0);
+    // return (1.0 - a) * color(0.3, 0.5, 0.9); // + a * color(0.5, 0.7, 1.0);
+    // return color(0.7, 0.2, 0.1);
   }
 };

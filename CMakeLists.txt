@@ -16,6 +16,9 @@ set(SOURCES
 
 add_executable(raywizard ${SOURCES})
 
+find_package(ZLIB REQUIRED)
+target_link_libraries(raywizard PRIVATE ZLIB::ZLIB)
+
 target_include_directories(raywizard PRIVATE src)
 
 set_target_properties(raywizard PROPERTIES

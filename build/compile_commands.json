@@ -1,7 +1,7 @@
 [
 {
   "directory": "/Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/build",
-  "command": "/usr/bin/c++  -I/Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/src -std=c++2b -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/raywizard.dir/src/main.cpp.o -c /Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/src/main.cpp",
+  "command": "/usr/bin/c++  -I/Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/src -O3 -DNDEBUG -std=c++2b -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/raywizard.dir/src/main.cpp.o -c /Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/src/main.cpp",
   "file": "/Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/src/main.cpp",
   "output": "CMakeFiles/raywizard.dir/src/main.cpp.o"
 }

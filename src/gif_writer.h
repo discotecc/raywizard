@@ -2,6 +2,8 @@
 
 // dependency free gif writer
 
+#include "frame_writer.h"
+
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
@@ -9,7 +11,7 @@
 #include <string>
 #include <vector>
 
-class gif_writer {
+class gif_writer : public frame_writer {
 public:
   // delay_cs: time each frame is shown, in hundredths of a second
   // loop_count: 0 = loop forever

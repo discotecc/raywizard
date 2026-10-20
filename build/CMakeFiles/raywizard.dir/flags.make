@@ -6,7 +6,7 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/Users/georgeandrewporte/Dev/graphics/raytracing/raywizard/src
 
-CXX_FLAGSarm64 = -std=c++2b -arch arm64 -Wall -Wextra -Wpedantic
+CXX_FLAGSarm64 = -O3 -DNDEBUG -std=c++2b -arch arm64 -Wall -Wextra -Wpedantic
 
-CXX_FLAGS = -std=c++2b -arch arm64 -Wall -Wextra -Wpedantic
+CXX_FLAGS = -O3 -DNDEBUG -std=c++2b -arch arm64 -Wall -Wextra -Wpedantic
 
